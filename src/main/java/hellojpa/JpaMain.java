@@ -18,27 +18,39 @@ public class JpaMain {
         tx.begin();
 
         try {
-            //등록
-//            Member member = new Member();
-//            member.setId(2L);
-//            member.setName("HelloB");
+
+            //비영속
+//          Member member = new Member();
+//          member.setId(101L);
+//          member.setName("HelloJPA");
+
+            //영속
+//          Member member1 = new Member(150L, "A");
+//          Member member2 = new Member(160L, "B");
 //
-//            em.persist(member);
+//          em.persist(member1);
+//          em.persist(member2);
 
-            //수정
-            //Member findMember = em.find(Member.class, 1L);
-            //findMember.setName("HelloJPA");
+            //엔티티 수정 - 변경 감지
+//          Member member = em.find(Member.class, 150L);
+//          member.setName("ZZZZZ");
 
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)
-                    .getResultList();
+            //플러시 사용
+//          Member member = new Member(200L, "member200");
+//          em.persist(member);
+//
+//          em.flush();
 
-            for (Member member : result) {
-                System.out.println("member.name = " + member.getName());
-            }
+            Member member = em.find(Member.class, 150L);
+            member.setName("AAAAA");
 
-            tx.commit(); //필수
+            em.clear(); //영속성 컨텍스트를 완전히 초기화
+
+            Member member2 = em.find(Member.class, 150L);
+
+            System.out.println("====================");
+
+            tx.commit(); //DB에 쿼리 전송
         } catch (Exception e) {
             tx.rollback(); //문제가 생겼을 때
         } finally {
