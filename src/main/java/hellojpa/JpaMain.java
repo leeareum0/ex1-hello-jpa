@@ -41,14 +41,19 @@ public class JpaMain {
 //
 //          em.flush();
 
-            Member member = em.find(Member.class, 150L);
-            member.setName("AAAAA");
+//          Member member = em.find(Member.class, 150L);
+//          member.setName("AAAAA");
 
-            em.clear(); //영속성 컨텍스트를 완전히 초기화
+            //em.clear(); //영속성 컨텍스트를 완전히 초기화
 
-            Member member2 = em.find(Member.class, 150L);
+            //Member member2 = em.find(Member.class, 150L);
 
-            System.out.println("====================");
+            Member member = new Member();
+            member.setUsername("C");
+
+            em.persist(member);
+
+            System.out.println("member.id = " + member.getId());
 
             tx.commit(); //DB에 쿼리 전송
         } catch (Exception e) {
