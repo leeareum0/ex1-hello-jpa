@@ -1,23 +1,21 @@
 package hellojpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Team {
 
     @Id
     @GeneratedValue
-    @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(name = "USERNAME")
     private String name;
 
-    @Column(name = "TEAM_ID")
-    private String teamId;
+    @OneToMany(mappedBy = "team") //읽기전용
+    private List<Member> members = new ArrayList<>();
+
 
     public Long getId() {
         return id;
@@ -35,11 +33,11 @@ public class Team {
         this.name = name;
     }
 
-    public String getTeamId() {
-        return teamId;
+    public List<Member> getMembers() {
+        return members;
     }
 
-    public void setTeamId(String teamId) {
-        this.teamId = teamId;
+    public void setMembers(List<Member> members) {
+        this.members = members;
     }
 }
