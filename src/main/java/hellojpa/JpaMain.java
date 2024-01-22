@@ -26,8 +26,13 @@ public class JpaMain {
 
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeam(team);
+            //연관관계의 주인에 값 설정 1
+            //member.changeTeam(team);
             em.persist(member);
+
+            //team.getMembers().add(member);
+
+            team.addMember(member); //2
 
             em.flush();
             em.clear();
