@@ -19,6 +19,19 @@ public class JpaMain {
 
         try {
 
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeamId(team.getId());
+            em.persist(member);
+
+            Member findMember = em.find(Member.class, member.getId());
+
+            Team findTeam = em.find(Team.class, team.getId());
+
             //비영속
 //          Member member = new Member();
 //          member.setId(101L);
@@ -47,28 +60,6 @@ public class JpaMain {
             //em.clear(); //영속성 컨텍스트를 완전히 초기화
 
             //Member member2 = em.find(Member.class, 150L);
-
-            Member member1 = new Member();
-            member1.setUsername("A");
-
-            Member member2 = new Member();
-            member2.setUsername("B");
-
-            Member member3 = new Member();
-            member3.setUsername("C");
-
-            System.out.println("==============");
-
-
-            em.persist(member1); //1,51
-            em.persist(member2); //MEM
-            em.persist(member3); //MEM
-
-            System.out.println("member1 = " + member1.getId());
-            System.out.println("member2 = " + member2.getId());
-            System.out.println("member3 = " + member3.getId());
-
-            System.out.println("==============");
 
             tx.commit(); //DB에 쿼리 전송
         } catch (Exception e) {

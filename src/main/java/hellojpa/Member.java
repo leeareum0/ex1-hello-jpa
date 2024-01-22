@@ -1,22 +1,20 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
-@SequenceGenerator(name = "MEMBER_SEQ_GENERATOR",
-        sequenceName = "MEMBER_SEQ", //매핑할 DB 시퀀스 이름
-        initialValue = 1, allocationSize = 50)
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
+    @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private long id;
 
-    @Column(name = "name", nullable = false) //DB 컬럼명 지정
+    @Column(name = "USERNAME")
     private String username;
+
+    @Column(name = "TEAM_ID")
+    private Long teamId;
 
     public long getId() {
         return id;
@@ -33,7 +31,16 @@ public class Member {
     public void setUsername(String username) {
         this.username = username;
     }
-/*
+
+    public Long getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
+    }
+}
+   /*
     private Integer age;
 
     @Enumerated(EnumType.STRING) //enum 타입 매핑
@@ -55,8 +62,4 @@ public class Member {
     private int temp;
     */
 
-    public Member() {
-
-    }
-}
 
