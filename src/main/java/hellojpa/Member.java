@@ -1,6 +1,7 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.util.concurrent.locks.Lock;
 
 @Entity
 public class Member {
@@ -19,6 +20,10 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
+
+    @OneToOne //일대일
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
 
     public long getId() {
         return id;
