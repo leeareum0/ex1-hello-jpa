@@ -21,14 +21,15 @@ public class JpaMain {
         try {
 
             Member member = new Member();
-            member.setUsername("user1");
-            member.setCreatedBy("kim");
-            member.setCreatedDate(LocalDateTime.now());
+            member.setUsername("hello");
 
             em.persist(member);
 
             em.flush();
             em.clear();
+
+            Member findMember = em.getReference(Member.class, member.getId());
+            System.out.println("findMember.username = " + findMember.getUsername());
 
             tx.commit(); //DB에 쿼리 전송
         } catch (Exception e) {
