@@ -20,25 +20,16 @@ public class JpaMain {
 
         try {
 
-            Team team = new Team();
-            team.setName("teamA");
-            em.persist(team);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            Member member1 = new Member();
-            member1.setUsername("member1");
-            member1.setTeam(team);
-            em.persist(member1);
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-            em.flush();
-            em.clear();
-
-            Member m = em.find(Member.class, member1.getId());
-
-            System.out.println("m = " + m.getTeam().getClass());
-
-            System.out.println("=============");
-            m.getTeam().getName(); //초기화
-            System.out.println("=============");
+            em.persist(parent);
+//            em.persist(child1);
+//            em.persist(child2);
 
             tx.commit(); //DB에 쿼리 전송
         } catch (Exception e) {
