@@ -28,8 +28,15 @@ public class JpaMain {
             parent.addChild(child2);
 
             em.persist(parent);
-//            em.persist(child1);
-//            em.persist(child2);
+            em.persist(child1);
+            em.persist(child2);
+
+            em.flush();
+            em.clear();
+
+            Parent findParent = em.find(Parent.class, parent.getId());
+            //findParent.getChildList().remove(0);
+            em.remove(findParent); //삭제
 
             tx.commit(); //DB에 쿼리 전송
         } catch (Exception e) {
