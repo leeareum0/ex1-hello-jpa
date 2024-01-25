@@ -19,13 +19,10 @@ public class Member extends BaseEntity{
 //    @Column(name = "TEAM_ID")
 //    private Long teamId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) //지연로딩 사용 - 프록시 객체로 조회
+    //@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TEAM_ID")
     private Team team;
-
-    @OneToOne //일대일
-    @JoinColumn(name = "LOCKER_ID")
-    private Locker locker;
 
     @ManyToMany
     @JoinTable(name = "MEMBER_PRODUCT")
