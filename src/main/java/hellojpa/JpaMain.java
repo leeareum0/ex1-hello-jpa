@@ -1,5 +1,6 @@
 package hellojpa;
 
+import jdk.jfr.Period;
 import org.hibernate.Hibernate;
 
 import javax.persistence.EntityManager;
@@ -20,25 +21,13 @@ public class JpaMain {
 
         try {
 
-            Child child1 = new Child();
-            Child child2 = new Child();
+            Member member = new Member();
+            member.setUsername("hello");
+            member.setHomeAddress(new Address("city", "street", "10"));
 
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
+            em.persist(member);
 
-            em.persist(parent);
-            em.persist(child1);
-            em.persist(child2);
-
-            em.flush();
-            em.clear();
-
-            Parent findParent = em.find(Parent.class, parent.getId());
-            //findParent.getChildList().remove(0);
-            em.remove(findParent); //삭제
-
-            tx.commit(); //DB에 쿼리 전송
+            tx.commit();
         } catch (Exception e) {
             tx.rollback();
             e.printStackTrace();
