@@ -1,12 +1,10 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.locks.Lock;
+import java.time.Period;
 
 @Entity
-public class Member extends BaseEntity{
+public class Member {
 
     @Id
     @GeneratedValue
@@ -16,17 +14,11 @@ public class Member extends BaseEntity{
     @Column(name = "USERNAME")
     private String username;
 
-//    @Column(name = "TEAM_ID")
-//    private Long teamId;
+    @Embedded
+    private Period workPeriod;
 
-    //@ManyToOne(fetch = FetchType.LAZY) //지연로딩 사용 - 프록시 객체로 조회
-    @ManyToOne(fetch = FetchType.EAGER) //즉시로딩
-    @JoinColumn(name = "TEAM_ID")
-    private Team team;
-
-    @ManyToMany
-    @JoinTable(name = "MEMBER_PRODUCT")
-    private List<Product> products = new ArrayList<>();
+    @Embedded
+    private Address homeAddress;
 
     public long getId() {
         return id;
@@ -43,38 +35,20 @@ public class Member extends BaseEntity{
     public void setUsername(String username) {
         this.username = username;
     }
-    public Team getTeam() {
-        return team;
+
+    public Period getWorkPeriod() {
+        return workPeriod;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
     }
-//    public void changeTeam(Team team) {
-//        this.team = team;
-//        team.getMembers().add(this);
-//    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
 }
-   /*
-    private Integer age;
-
-    @Enumerated(EnumType.STRING) //enum 타입 매핑
-    private RoleType roleType;
-
-    @Temporal(TemporalType.TIMESTAMP) //날짜타입 매핑
-    private Date createDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
-
-    private LocalDate testLocalDate;
-    private LocalDateTime testLocalDateTime;
-
-    @Lob //BLOB, CLOB 매핑
-    private String description;
-
-    @Transient //매핑 X
-    private int temp;
-    */
-
-
