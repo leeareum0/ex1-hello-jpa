@@ -20,6 +20,17 @@ public class Member {
     @Embedded
     private Address homeAddress;
 
+    @Embedded
+    @AttributeOverrides({ //한 엔티티에서 같은 값 타입 사용으로 칼럼명이 중복될 경우 사용 - 속성 재정의
+            @AttributeOverride(name = "city",
+                    column = @Column(name = "WORK_CITY")),
+            @AttributeOverride(name = "street",
+                    column = @Column(name = "WORK_STREET")),
+            @AttributeOverride(name = "zipcode",
+                    column = @Column(name = "WORK_ZIPCODE"))
+    })
+    private Address workAddress;
+
     public long getId() {
         return id;
     }
