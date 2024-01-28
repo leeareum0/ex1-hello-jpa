@@ -22,17 +22,24 @@ public class JpaMain {
 
         try {
 
-            //Criteria 사용 준비
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Member> query = cb.createQuery(Member.class);
+            Member member = new Member();
+            member.setUsername("member1");
+            em.persist(member);
 
-            //루트 클래스 (조회를 시작할 클래스)
-            Root<Member> m = query.from(Member.class);
+            //flush -> commit, query 전송 될 때
 
-            //쿼리 생성
-            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
-            List<Member> resultList = em.createQuery(cq).getResultList();
+            //JDBC 커넥션 - 강제 플러시
+            em.flush();
 
+            //결과 0
+            //dbconn.executeQuery("select * from member");
+
+            //네이티브 SQL
+            List<Member> resultList = em.createNativeQuery("select MEMBER_ID, city, street, zipcode, USERNAME from MEMBER").getResultList();
+
+            for (Member member1 : resultList) {
+                System.out.println("member1 = " + member1);
+            }
 
             tx.commit();
         } catch (Exception e) {
